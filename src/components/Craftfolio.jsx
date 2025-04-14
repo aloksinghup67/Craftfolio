@@ -21,7 +21,43 @@ const Craftfolio = () => {
   const [showFullPreview, setShowFullPreview] = useState(false);
   const [showResetDialog, setShowResetDialog] = useState(false);
   const [showArrow, setShowArrow] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const resumeRef = useRef(null);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+    };
+
+    // Check on mount
+    checkMobile();
+
+    // Add resize listener
+    window.addEventListener('resize', checkMobile);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Show mobile notification
+  useEffect(() => {
+    if (isMobile) {
+      toast.info(
+        "For the best experience, please open this site on a desktop device.",
+        {
+          duration: 10000,
+          position: "top-center",
+          className: "bg-yellow-50 border border-yellow-200 text-yellow-800",
+          action: {
+            label: "Got it",
+            onClick: () => {}
+          }
+        }
+      );
+    }
+  }, [isMobile]);
 
   // Show notification on first visit
   useEffect(() => {
@@ -224,9 +260,11 @@ const Craftfolio = () => {
           <h1 className="text-3xl font-bold">Craftfolio</h1>
           <div className="flex flex-wrap gap-2 relative">
             {showArrow && (
-              <div className="absolute -top-16 right-0 flex flex-col items-end z-50">
-                <ArrowDown className="h-8 w-8 text-blue-600 animate-bounce" />
-                <span className="text-sm text-blue-600 font-medium bg-white px-2 py-1 rounded shadow">Click here!</span>
+              <div className="absolute -top-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-50">
+                <ArrowDown className="h-10 w-10 text-blue-600 animate-bounce" />
+                <span className="text-sm text-blue-600 font-medium bg-white px-3 py-1.5 rounded-lg shadow-lg border border-blue-200">
+                  Click here to view your resume!
+                </span>
               </div>
             )}
             <Button variant="outline" onClick={handleReset} className="flex items-center">
@@ -247,6 +285,14 @@ const Craftfolio = () => {
             </Button>
           </div>
         </div>
+
+        {isMobile && (
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-center">
+            <p className="text-yellow-800 text-sm">
+              <span className="font-semibold">Note:</span> This resume builder works best on desktop devices. UI may be limited on mobile.
+            </p>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
