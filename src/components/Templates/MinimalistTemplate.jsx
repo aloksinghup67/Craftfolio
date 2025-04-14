@@ -82,10 +82,10 @@ const MinimalistTemplate = ({ data }) => {
               {education.map((edu, idx) => (
                 <li key={idx}>
                   <p className="font-bold">{edu.degree}</p>
-                  <p>{edu.institution}</p>
+                  <p>{edu.school}</p>
                   {edu.location && <p className="text-gray-600">{edu.location}</p>}
                   <p className="text-sm text-gray-500">
-                    {edu.startYear} - {edu.endYear}
+                    {edu.startDate} - {edu.endDate}
                   </p>
                 </li>
               ))}
