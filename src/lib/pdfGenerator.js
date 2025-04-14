@@ -1,0 +1,31 @@
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
+export const generatePDF = async (element) => {
+  try {
+    // Create a canvas of the element with desired scale
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      logging: false,
+    });
+
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4',
+    });
+
+    // Get full A4 dimensions.
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+
+    // Force the canvas image to fill the entire PDF page.
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save('resume.pdf');
+  } catch (error) {
+    console.error('Error in PDF generation:', error);
+    throw error;
+  }
+};
