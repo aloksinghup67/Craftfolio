@@ -22,7 +22,7 @@ A modern, responsive resume builder application built with React and Vite. Creat
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/craftfolio.git
+git clone https://github.com/aloksinghup67/craftfolio.git
 cd craftfolio
 ```
 
