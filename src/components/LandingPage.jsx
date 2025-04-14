@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useResumeContext } from '@/context/ResumeContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
-// Import images from the same folder as the LandingPage file
 import minimalistImg from './minimalist.jpg';
 import classicImg from './classic.jpg';
 import modernImg from './modern.png';
@@ -13,7 +13,36 @@ import modernImg from './modern.png';
 const LandingPage = () => {
   const { setSelectedTemplate } = useResumeContext();
   const [selectedTemplateId, setSelectedTemplateId] = useState('minimalist');
+  const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) {
+      toast.info(
+        "For the best experience, please open this site on a desktop device.",
+        {
+          duration: 10000,
+          position: "top-center",
+          className: "bg-yellow-50 border border-yellow-200 text-yellow-800",
+          action: {
+            label: "Got it",
+            onClick: () => {}
+          }
+        }
+      );
+    }
+  }, [isMobile]);
 
   const templates = [
     {
@@ -54,7 +83,14 @@ const LandingPage = () => {
           </p>
         </div>
 
-        {/* Features Section */}
+        {isMobile && (
+          <div className="mb-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-center max-w-2xl mx-auto">
+            <p className="text-yellow-800 text-sm">
+              <span className="font-semibold">Note:</span> This resume builder works best on desktop devices. User Interface may be limited on mobile.
+            </p>
+          </div>
+        )}
+
         <div className="mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl font-semibold text-center mb-6 sm:mb-8">
             Why Choose Our Craftfolio?
@@ -87,7 +123,6 @@ const LandingPage = () => {
           </div>
         </div>
 
-        {/* Template Selection Section */}
         <div className="mb-12">
           <h2 className="text-2xl sm:text-3xl font-semibold text-center mb-6 sm:mb-8">
             Choose a Template
@@ -125,7 +160,6 @@ const LandingPage = () => {
           </div>
         </div>
 
-        {/* Call to Action Section */}
         <div className="flex justify-center">
           <Button
             size="lg"
@@ -137,33 +171,31 @@ const LandingPage = () => {
           </Button>
         </div>
 
-        {/* Developer Info Footer */}
         <footer className="mt-16 pt-8 border-t border-gray-300 text-center">
-  <div className="text-sm text-gray-600 flex flex-col sm:flex-row items-center justify-center gap-2">
-    <span>
-      Developed by <span className="font-semibold">Alok Singh</span>
-    </span>
-    <span className="hidden sm:inline">|</span>
-    <a
-      href="mailto:aloksinghkh43@gmail.com"
-      className="underline text-blue-600"
-    >
-      aloksinghkh43@gmail.com
-    </a>
-    <span className="hidden sm:inline">|</span>
-    <span>MCA - MMMUT Gorakhpur, UP</span>
-    <span className="hidden sm:inline">|</span>
-    <a
-      href="https://www.linkedin.com/in/alok-singh-b01966265"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="underline text-blue-600"
-    >
-      LinkedIn
-    </a>
-  </div>
-</footer>
-
+          <div className="text-sm text-gray-600 flex flex-col sm:flex-row items-center justify-center gap-2">
+            <span>
+              Developed by <span className="font-semibold">Alok Singh</span>
+            </span>
+            <span className="hidden sm:inline">|</span>
+            <a
+              href="mailto:aloksinghkh43@gmail.com"
+              className="underline text-blue-600"
+            >
+              aloksinghkh43@gmail.com
+            </a>
+            <span className="hidden sm:inline">|</span>
+            <span>MCA - MMMUT Gorakhpur, UP</span>
+            <span className="hidden sm:inline">|</span>
+            <a
+              href="https://www.linkedin.com/in/alok-singh-b01966265"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-blue-600"
+            >
+              LinkedIn
+            </a>
+          </div>
+        </footer>
       </div>
     </div>
   );

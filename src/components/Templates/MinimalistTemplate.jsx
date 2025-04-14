@@ -1,15 +1,12 @@
 import React from 'react';
 
 const MinimalistTemplate = ({ data }) => {
-  // Destructure data with fallback for professional summary
   const { personalInfo, experience, education, skills, certifications, projects, summary } = data || {};
   const professionalSummary = personalInfo?.summary || summary;
 
   return (
     <div className="min-h-[297mm] flex bg-gray-100 font-sans w-full">
-      {/* Sidebar */}
       <aside className="w-64 bg-white p-6 shadow-lg">
-        {/* Name + Title */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">
             {personalInfo?.name || 'Your Name'}
@@ -19,7 +16,6 @@ const MinimalistTemplate = ({ data }) => {
           </p>
         </div>
 
-        {/* Contact Info */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold text-gray-800 mb-3">Contact</h2>
           <ul className="space-y-1 text-base text-gray-700">
@@ -30,7 +26,6 @@ const MinimalistTemplate = ({ data }) => {
           </ul>
         </div>
 
-        {/* Skills */}
         {skills?.length > 0 && (
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-800 mb-3">Skills</h2>
@@ -45,7 +40,6 @@ const MinimalistTemplate = ({ data }) => {
           </div>
         )}
 
-        {/* Certifications (Optional) */}
         {certifications?.length > 0 && (
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-800 mb-3">Certifications</h2>
@@ -62,9 +56,7 @@ const MinimalistTemplate = ({ data }) => {
         )}
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 p-8">
-        {/* Professional Summary */}
         {professionalSummary && (
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-blue-700 border-b-2 border-blue-700 pb-3 mb-4">
@@ -74,7 +66,6 @@ const MinimalistTemplate = ({ data }) => {
           </section>
         )}
 
-        {/* Education in Sidebar */}
         {education?.length > 0 && (
           <div className="mb-8">
             <h2 className="text-xl font-bold text-gray-800 mb-3">Education</h2>
@@ -82,10 +73,10 @@ const MinimalistTemplate = ({ data }) => {
               {education.map((edu, idx) => (
                 <li key={idx}>
                   <p className="font-bold">{edu.degree}</p>
-                  <p>{edu.institution}</p>
+                  <p>{edu.school}</p>
                   {edu.location && <p className="text-gray-600">{edu.location}</p>}
                   <p className="text-sm text-gray-500">
-                    {edu.startYear} - {edu.endYear}
+                    {edu.startDate} - {edu.endDate}
                   </p>
                 </li>
               ))}
@@ -93,7 +84,6 @@ const MinimalistTemplate = ({ data }) => {
           </div>
         )}
 
-        {/* Work Experience */}
         {experience?.length > 0 && (
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-2 border-b border-gray-300 pb-3">
@@ -127,7 +117,6 @@ const MinimalistTemplate = ({ data }) => {
           </section>
         )}
 
-        {/* Projects */}
         {projects?.length > 0 && (
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-2 border-b border-gray-300 pb-3">

@@ -5,7 +5,6 @@ const ModernTemplate = ({ data }) => {
 
   return (
     <div className="p-8 max-w-6xl mx-auto bg-white shadow-lg min-h-[297mm] w-full">
-      {/* Header Section */}
       <div className="mb-8 text-center border-b-4 border-pink-500 pb-4">
         <h1 className="text-5xl font-bold text-gray-900">
           {personalInfo?.name || 'Full Name'}
@@ -20,9 +19,7 @@ const ModernTemplate = ({ data }) => {
         </div>
       </div>
 
-      {/* Two-column Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Left Column */}
         <div>
           {personalInfo?.summary && (
             <div className="mb-8">
@@ -114,7 +111,6 @@ const ModernTemplate = ({ data }) => {
           )}
         </div>
 
-        {/* Right Column */}
         <div>
           {education?.length > 0 && (
             <div className="mb-8">

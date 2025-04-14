@@ -15,7 +15,6 @@ const ResumePreview = forwardRef(({ scale = 1, isFullPreview = false }, ref) => 
   const internalRef = useRef(null);
   const [showFullPreview, setShowFullPreview] = useState(false);
 
-  // Combine the forwarded ref with our internal ref.
   const setRefs = (el) => {
     internalRef.current = el;
     if (ref) {
@@ -27,7 +26,6 @@ const ResumePreview = forwardRef(({ scale = 1, isFullPreview = false }, ref) => 
     }
   };
 
-  // Updated PDF generation: force A4 dimensions (210mm x 297mm).
   const handleDownloadPDF = async () => {
     try {
       toast.info("Generating PDF...");
@@ -39,10 +37,8 @@ const ResumePreview = forwardRef(({ scale = 1, isFullPreview = false }, ref) => 
         return;
       }
 
-      // Clone the resume element
       const clone = resumeElement.cloneNode(true);
       
-      // Set A4 dimensions and styling for the clone
       clone.style.width = '210mm';
       clone.style.minHeight = '297mm';
       clone.style.margin = '0';
@@ -54,17 +50,14 @@ const ResumePreview = forwardRef(({ scale = 1, isFullPreview = false }, ref) => 
       clone.style.top = '0';
       clone.style.backgroundColor = '#ffffff';
       
-      // Apply a global scale factor to all text elements while preserving relative sizes
       const textElements = clone.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, span, div');
       textElements.forEach(el => {
         const computedStyle = window.getComputedStyle(el);
         const currentFontSize = parseFloat(computedStyle.fontSize);
         
-        // Apply a scaling factor to increase text size while preserving relative sizes
-        const scaleFactor = 1.5; // Increase all text by 50%
+        const scaleFactor = 1.5;
         el.style.fontSize = `${currentFontSize * scaleFactor}px`;
         
-        // Preserve line height ratio
         const currentLineHeight = computedStyle.lineHeight;
         if (currentLineHeight !== 'normal') {
           const lineHeightValue = parseFloat(currentLineHeight);
@@ -72,28 +65,24 @@ const ResumePreview = forwardRef(({ scale = 1, isFullPreview = false }, ref) => 
         }
       });
 
-      // Remove any elements that should not be included in the PDF
       const noPdfElements = clone.querySelectorAll('.no-pdf');
       noPdfElements.forEach(el => el.remove());
 
       document.body.appendChild(clone);
-      await new Promise(resolve => setTimeout(resolve, 100)); // Wait for DOM update
+      await new Promise(resolve => setTimeout(resolve, 100));
 
-      // Generate canvas with higher scale for better quality
       const canvas = await html2canvas(clone, {
-        scale: 2, // Good balance between quality and performance
+        scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
         logging: false,
-        windowWidth: 210 * 3.78, // Convert mm to pixels (1mm = 3.78px)
+        windowWidth: 210 * 3.78,
         windowHeight: 297 * 3.78,
       });
 
-      // Clean up the clone
       clone.remove();
 
-      // Create PDF with A4 dimensions
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
@@ -103,11 +92,9 @@ const ResumePreview = forwardRef(({ scale = 1, isFullPreview = false }, ref) => 
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
 
-      // Calculate dimensions to maintain aspect ratio and fill the page
       const imgWidth = pdfWidth;
       const imgHeight = pdfHeight;
 
-      // Add the image to fill the page
       pdf.addImage(
         canvas.toDataURL('image/png'),
         'PNG',
@@ -143,7 +130,6 @@ const ResumePreview = forwardRef(({ scale = 1, isFullPreview = false }, ref) => 
     }
   };
 
-  // On-screen preview styles remain the same.
   const previewStyles = {
     width: '100%',
     height: 'auto',

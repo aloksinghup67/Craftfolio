@@ -72,11 +72,10 @@ const ExperienceForm = () => {
 
   const handleAdd = () => {
     if (newExperience.jobTitle && newExperience.company) {
-      // Filter out any empty achievements before adding
       const filteredAchievements = newExperience.achievements.filter(achievement => achievement.trim() !== '');
       addExperience({
         ...newExperience,
-        id: Date.now().toString(), // Add a unique ID
+        id: Date.now().toString(),
         achievements: filteredAchievements
       });
       setNewExperience({

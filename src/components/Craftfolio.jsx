@@ -24,24 +24,17 @@ const Craftfolio = () => {
   const [isMobile, setIsMobile] = useState(false);
   const resumeRef = useRef(null);
 
-  // Check if device is mobile
   useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth <= 768;
       setIsMobile(mobile);
     };
 
-    // Check on mount
     checkMobile();
-
-    // Add resize listener
     window.addEventListener('resize', checkMobile);
-
-    // Cleanup
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Show mobile notification
   useEffect(() => {
     if (isMobile) {
       toast.info(
@@ -59,12 +52,10 @@ const Craftfolio = () => {
     }
   }, [isMobile]);
 
-  // Show notification on first visit
   useEffect(() => {
     const hasSeenNotification = localStorage.getItem('hasSeenResumeNotification');
     
     if (!hasSeenNotification) {
-      // Show notification after a short delay to ensure the page is fully loaded
       const timer = setTimeout(() => {
         setShowArrow(true);
         toast.info(
@@ -87,7 +78,6 @@ const Craftfolio = () => {
     }
   }, []);
 
-  // Scroll to top when section changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentSection]);
@@ -116,7 +106,6 @@ const Craftfolio = () => {
   };
 
   const handleSave = () => {
-    // Data is already being saved to localStorage through the ResumeContext
     toast.success("Progress saved successfully!");
   };
 
@@ -140,11 +129,8 @@ const Craftfolio = () => {
       toast.info("Generating PDF...");
 
       const resumeElement = resumeRef.current;
-      
-      // Create a hidden clone for PDF generation
       const clone = resumeElement.cloneNode(true);
       
-      // Set A4 dimensions and styling for the clone
       clone.style.width = '210mm';
       clone.style.minHeight = '297mm';
       clone.style.margin = '0';
@@ -156,14 +142,11 @@ const Craftfolio = () => {
       clone.style.top = '0';
       clone.style.backgroundColor = '#ffffff';
       
-      // Remove any elements that should not be included in the PDF
       const noPdfElements = clone.querySelectorAll('.no-pdf');
       noPdfElements.forEach(el => el.remove());
 
-      // Add a class to the clone for PDF-specific styling
       clone.classList.add('pdf-export');
       
-      // Apply PDF-specific styles to prevent text stretching
       const style = document.createElement('style');
       style.textContent = `
         .pdf-export * {
@@ -180,23 +163,20 @@ const Craftfolio = () => {
       clone.appendChild(style);
 
       document.body.appendChild(clone);
-      await new Promise(resolve => setTimeout(resolve, 100)); // Wait for DOM update
+      await new Promise(resolve => setTimeout(resolve, 100));
 
-      // Generate canvas with higher scale for better quality
       const canvas = await html2canvas(clone, {
-        scale: 2, // Good balance between quality and performance
+        scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
         logging: false,
-        windowWidth: 210 * 3.78, // Convert mm to pixels (1mm = 3.78px)
+        windowWidth: 210 * 3.78,
         windowHeight: 297 * 3.78,
       });
 
-      // Clean up the clone
       clone.remove();
 
-      // Create PDF with A4 dimensions
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
@@ -206,11 +186,9 @@ const Craftfolio = () => {
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
 
-      // Calculate dimensions to maintain aspect ratio and fill the page
       const imgWidth = pdfWidth;
       const imgHeight = pdfHeight;
 
-      // Add the image to fill the page
       pdf.addImage(
         canvas.toDataURL('image/png'),
         'PNG',
@@ -333,7 +311,6 @@ const Craftfolio = () => {
           </div>
         </div>
 
-        {/* Full Preview Dialog */}
         <Dialog open={showFullPreview} onOpenChange={setShowFullPreview}>
           <DialogContent className="max-w-4xl w-full p-0 m-0 overflow-auto bg-white" style={{ height: '90vh' }}>
             <div className="sticky top-0 z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 p-2 bg-white border-b">
@@ -356,7 +333,6 @@ const Craftfolio = () => {
           </DialogContent>
         </Dialog>
 
-        {/* Reset Confirmation Dialog */}
         <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
