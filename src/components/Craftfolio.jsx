@@ -51,6 +51,11 @@ const Craftfolio = () => {
     }
   }, []);
 
+  // Scroll to top when section changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentSection]);
+
   const sections = [
     { id: 'personal', label: 'Personal Information' },
     { id: 'experience', label: 'Experience' },

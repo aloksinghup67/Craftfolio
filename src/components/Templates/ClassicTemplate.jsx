@@ -93,12 +93,12 @@ const ClassicTemplate = ({ data }) => {
                 <div className="flex justify-between items-start mb-1">
                   <div>
                     <h3 className="font-bold text-lg">{edu.degree}</h3>
-                    <h4 className="text-gray-700 text-base">{edu.institution}</h4>
+                    <h4 className="text-gray-700 text-base">{edu.school}</h4>
                     {edu.location && <p className="text-gray-600 text-base">{edu.location}</p>}
                   </div>
                   <div className="flex items-center text-gray-600 text-base">
                     <Calendar size={16} className="mr-1" />
-                    <span>{edu.startYear} – {edu.endYear || 'Present'}</span>
+                    <span>{edu.startDate?.split('-')[0]} – {edu.endDate?.split('-')[0]}</span>
                   </div>
                 </div>
                 {edu.description && <p className="text-gray-700 mt-1 text-base">{edu.description}</p>}

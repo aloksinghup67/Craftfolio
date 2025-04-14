@@ -85,7 +85,7 @@ const MinimalistTemplate = ({ data }) => {
                   <p>{edu.institution}</p>
                   {edu.location && <p className="text-gray-600">{edu.location}</p>}
                   <p className="text-sm text-gray-500">
-                    {edu.startYear} - {edu.endYear || 'Present'}
+                    {edu.startYear} - {edu.endYear}
                   </p>
                 </li>
               ))}

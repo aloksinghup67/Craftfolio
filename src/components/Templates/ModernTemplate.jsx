@@ -129,7 +129,7 @@ const ModernTemplate = ({ data }) => {
                     <p className="text-base text-gray-500">{edu.location}</p>
                   )}
                   <p className="text-base text-gray-500">
-                    {edu.startYear} - {edu.endYear || 'Present'}
+                    {edu.startDate?.split('-')[0]} - {edu.endDate?.split('-')[0]}
                   </p>
                 </div>
               ))}

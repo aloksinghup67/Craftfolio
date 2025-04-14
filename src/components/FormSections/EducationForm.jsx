@@ -5,7 +5,6 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Plus, Trash2, GraduationCap } from 'lucide-react';
 
 const EducationForm = () => {
@@ -19,17 +18,16 @@ const EducationForm = () => {
     fieldOfStudy: '',
     startDate: '',
     endDate: '',
-    current: false,
     gpa: '',
     description: '',
   });
 
   const handleChange = (e, id) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     if (id) {
-      updateEducation(id, { [name]: type === 'checkbox' ? checked : value });
+      updateEducation(id, { [name]: value });
     } else {
-      setNewEducation(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+      setNewEducation(prev => ({ ...prev, [name]: value }));
     }
   };
 
@@ -45,7 +43,6 @@ const EducationForm = () => {
         fieldOfStudy: '',
         startDate: '',
         endDate: '',
-        current: false,
         gpa: '',
         description: '',
       });
@@ -119,39 +116,33 @@ const EducationForm = () => {
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor={`startDate-${edu.id}`} className="text-slate-700 dark:text-slate-300">Start Date</Label>
+                <Label htmlFor={`startDate-${edu.id}`} className="text-slate-700 dark:text-slate-300">Start Year</Label>
                 <Input
                   id={`startDate-${edu.id}`}
                   name="startDate"
-                  type="date"
+                  type="number"
+                  min="1900"
+                  max="2100"
                   value={edu.startDate}
                   onChange={(e) => handleChange(e, edu.id)}
+                  placeholder="2021"
                   className="bg-white/50 dark:bg-slate-900/50"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor={`endDate-${edu.id}`} className="text-slate-700 dark:text-slate-300">End Date</Label>
+                <Label htmlFor={`endDate-${edu.id}`} className="text-slate-700 dark:text-slate-300">End Year</Label>
                 <Input
                   id={`endDate-${edu.id}`}
                   name="endDate"
-                  type="date"
+                  type="number"
+                  min="1900"
+                  max="2100"
                   value={edu.endDate}
                   onChange={(e) => handleChange(e, edu.id)}
-                  disabled={edu.current}
+                  placeholder="2024"
                   className="bg-white/50 dark:bg-slate-900/50"
                 />
-              </div>
-              
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id={`current-${edu.id}`}
-                  name="current"
-                  checked={edu.current}
-                  onCheckedChange={(checked) => updateEducation(edu.id, { current: checked })}
-                  className="border-slate-300 dark:border-slate-700"
-                />
-                <Label htmlFor={`current-${edu.id}`} className="text-slate-700 dark:text-slate-300">Currently Studying</Label>
               </div>
             </div>
             
@@ -236,40 +227,61 @@ const EducationForm = () => {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="startDate">Start Date</Label>
+              <Label htmlFor="startDate">Start Year</Label>
               <Input
                 id="startDate"
                 name="startDate"
-                type="date"
+                type="number"
+                min="1900"
+                max="2100"
                 value={newEducation.startDate}
                 onChange={handleChange}
+                placeholder="2021"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="endDate">End Date</Label>
+              <Label htmlFor="endDate">End Year</Label>
               <Input
                 id="endDate"
                 name="endDate"
-                type="date"
+                type="number"
+                min="1900"
+                max="2100"
                 value={newEducation.endDate}
                 onChange={handleChange}
+                placeholder="2024"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="current">Currently Studying</Label>
-              <Checkbox
-                id="current"
-                name="current"
-                checked={newEducation.current}
-                onCheckedChange={(checked) => handleChange(null, null)}
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                name="description"
+                value={newEducation.description}
+                onChange={handleChange}
+                placeholder="Relevant coursework, achievements, activities..."
+                className="min-h-[100px]"
               />
             </div>
             
-            <Button onClick={handleAdd} className="w-full">
-              Add Education
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={handleAdd}
+                className="flex-1"
+                disabled={!newEducation.school || !newEducation.degree}
+              >
+                Add Education
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setShowAddForm(false)}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+            </div>
           </div>
         )}
       </CardContent>
