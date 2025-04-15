@@ -1,10 +1,11 @@
+
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{js,jsx}',
-    './components/**/*.{js,jsx}',
-    './app/**/*.{js,jsx}',
-    './src/**/*.{js,jsx}',
+    "./pages/**/*.{js,jsx}",
+    "./components/**/*.{js,jsx}",
+    "./app/**/*.{js,jsx}",
+    "./src/**/*.{js,jsx}",
   ],
   theme: {
     container: {
@@ -88,6 +89,27 @@ module.exports = {
           from: { transform: "scale(1)" },
           to: { transform: "scale(0.95)" },
         },
+       
+        "gradient-x": {
+          "0%, 100%": { "background-position": "0% 50%" },
+          "50%": { "background-position": "100% 50%" },
+        },
+        fadeIn: {
+          "0%": { opacity: 0, transform: "translateY(20px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+        slideIn: {
+          "0%": { opacity: 0, transform: "translateX(-50px)" },
+          "100%": { opacity: 1, transform: "translateX(0)" },
+        },
+        rotateIn: {
+          "0%": { opacity: 0, transform: "rotate(-15deg)" },
+          "100%": { opacity: 1, transform: "rotate(0)" },
+        },
+        bounceIcon: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-5px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -98,8 +120,13 @@ module.exports = {
         "slide-out": "slide-out 0.2s ease-out",
         "zoom-in": "zoom-in 0.2s ease-out",
         "zoom-out": "zoom-out 0.2s ease-out",
+        "gradient-x": "gradient-x 15s ease infinite",
+        fadeIn: "fadeIn 1s ease-out forwards",
+        slideIn: "slideIn 1s ease-out forwards",
+        rotateIn: "rotateIn 0.8s ease-out forwards",
+        bounceIcon: "bounceIcon 1s infinite",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} 
+};
