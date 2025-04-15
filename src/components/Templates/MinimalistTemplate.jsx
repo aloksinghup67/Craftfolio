@@ -66,23 +66,27 @@ const MinimalistTemplate = ({ data }) => {
           </section>
         )}
 
-        {education?.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-xl font-bold text-gray-800 mb-3">Education</h2>
-            <ul className="space-y-2 text-base text-gray-700">
-              {education.map((edu, idx) => (
-                <li key={idx}>
-                  <p className="font-bold">{edu.degree}</p>
-                  <p>{edu.school}</p>
-                  {edu.location && <p className="text-gray-600">{edu.location}</p>}
-                  <p className="text-sm text-gray-500">
-                    {edu.startDate} - {edu.endDate}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+{education?.length > 0 && (
+  <div className="mb-8">
+    <h2 className="text-xl font-bold text-gray-800 mb-3">Education</h2>
+    <ul className="space-y-2 text-base text-gray-700">
+      {education.map((edu, idx) => (
+        <li key={idx}>
+          <p className="font-bold">{edu.degree}</p>
+          <p>{edu.school}</p>
+          {edu.location && <p className="text-gray-600">{edu.location}</p>}
+          {edu.description && (
+            <p className="text-gray-700 mt-1">{edu.description}</p>
+          )}
+          <p className="text-sm text-gray-500">
+            {edu.startDate} - {edu.endDate}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
 
         {experience?.length > 0 && (
           <section className="mb-8">

@@ -112,25 +112,29 @@ const ModernTemplate = ({ data }) => {
         </div>
 
         <div>
-          {education?.length > 0 && (
-            <div className="mb-8">
-              <h2 className="text-3xl font-semibold text-gray-800 mb-4 border-b-2 border-pink-500 inline-block pb-3">
-                Education
-              </h2>
-              {education.map((edu, index) => (
-                <div key={index} className="mb-4 border-b pb-3">
-                  <h3 className="text-2xl font-semibold text-gray-800">{edu.degree}</h3>
-                  <p className="text-lg text-gray-600">{edu.institution}</p>
-                  {edu.location && (
-                    <p className="text-base text-gray-500">{edu.location}</p>
-                  )}
-                  <p className="text-base text-gray-500">
-                    {edu.startDate?.split('-')[0]} - {edu.endDate?.split('-')[0]}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
+        {education?.length > 0 && (
+  <div className="mb-8">
+    <h2 className="text-3xl font-semibold text-gray-800 mb-4 border-b-2 border-pink-500 inline-block pb-3">
+      Education
+    </h2>
+    {education.map((edu, index) => (
+      <div key={index} className="mb-4 border-b pb-3">
+        <h3 className="text-2xl font-semibold text-gray-800">{edu.degree}</h3>
+        <p className="text-lg text-gray-600">{edu.institution}</p>
+        {edu.location && (
+          <p className="text-base text-gray-500">{edu.location}</p>
+        )}
+        {edu.description && (
+          <p className="text-base text-gray-700 mt-1">{edu.description}</p>
+        )}
+        <p className="text-base text-gray-500">
+          {edu.startDate?.split('-')[0]} - {edu.endDate?.split('-')[0]}
+        </p>
+      </div>
+    ))}
+  </div>
+)}
+
 
           {skills?.length > 0 && (
             <div className="mb-8">

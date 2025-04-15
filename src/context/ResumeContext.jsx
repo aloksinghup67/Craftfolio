@@ -126,23 +126,23 @@ export const ResumeProvider = ({ children }) => {
   const addSkill = (skill) => {
     setResumeData(prev => ({
       ...prev,
-      skills: [...prev.skills, skill]
+      skills: [...prev.skills, { ...skill, id: Date.now().toString() }]
     }));
   };
 
-  const updateSkill = (index, skill) => {
+  const updateSkill = (id, updates) => {
     setResumeData(prev => ({
       ...prev,
-      skills: prev.skills.map((s, i) => 
-        i === index ? skill : s
+      skills: prev.skills.map(skill => 
+        skill.id === id ? { ...skill, ...updates } : skill
       )
     }));
   };
 
-  const removeSkill = (index) => {
+  const removeSkill = (id) => {
     setResumeData(prev => ({
       ...prev,
-      skills: prev.skills.filter((_, i) => i !== index)
+      skills: prev.skills.filter(skill => skill.id !== id)
     }));
   };
 

@@ -3,7 +3,7 @@ import jsPDF from 'jspdf';
 
 export const generatePDF = async (element) => {
   try {
-    // Create a canvas of the element with desired scale
+    
     const canvas = await html2canvas(element, {
       scale: 2,
       useCORS: true,
@@ -17,11 +17,10 @@ export const generatePDF = async (element) => {
       format: 'a4',
     });
 
-    // Get full A4 dimensions.
+    
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
 
-    // Force the canvas image to fill the entire PDF page.
     pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, pdfWidth, pdfHeight);
     pdf.save('resume.pdf');
   } catch (error) {

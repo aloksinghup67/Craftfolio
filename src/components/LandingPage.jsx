@@ -109,7 +109,7 @@ const LandingPage = () => {
                 02
               </span>
               <p className="text-base sm:text-lg text-center max-w-xs">
-                Multiple Templates - Choose a design that best fits your personality and career (more coming soon...).
+                Multiple Templates - Choose a design that best fits your personality and career. (more coming soon...)
               </p>
             </div>
             <div className="flex flex-col items-center p-4">
