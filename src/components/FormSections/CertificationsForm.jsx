@@ -35,8 +35,8 @@ const CertificationsForm = () => {
     }
   };
 
-  const handleRemove = (index) => {
-    removeCertification(index);
+  const handleRemove = (id) => {
+    removeCertification(id);
   };
 
   return (
@@ -113,9 +113,9 @@ const CertificationsForm = () => {
         {certifications.length > 0 && (
           <div className="mt-6 space-y-4">
             <h3 className="font-medium text-slate-700 dark:text-slate-300">Added Certifications</h3>
-            {certifications.map((certification, index) => (
+            {certifications.map((certification) => (
               <div 
-                key={index} 
+                key={certification.id} 
                 className="border rounded-xl p-4 bg-gradient-to-b from-white to-white/50 dark:from-slate-900 dark:to-slate-900/50
                          shadow-sm hover:shadow-md transition-all duration-200
                          border-slate-200/50 dark:border-slate-800/50"
@@ -131,7 +131,7 @@ const CertificationsForm = () => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => handleRemove(index)}
+                    onClick={() => handleRemove(certification.id)}
                     className="text-red-500 hover:text-red-600 hover:bg-red-50/50 dark:hover:bg-red-950/20"
                   >
                     <Trash2 size={16} />
